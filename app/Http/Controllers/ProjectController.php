@@ -14,18 +14,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('projects');
+        return view('projects', ['projects' => Project::all()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +26,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+               'title' => 'required|unique:projects,title|min:5|max:20',
+           ]);
+
+        $project = new Project();
+        $project->title = $request['title'];
+        $project->save();
+        // return redirect('/projects');
+
+        if ($project->title == NULL)
+            return redirect('/projects')->with('status_error', 'Field is empty!');
+
+        return ($project->save() !== 1) ?
+            redirect('/projects')->with('status_success', 'Project created!') :
+            redirect('/projects')->with('status_error', 'Project was not created!');
     }
 
     /**
@@ -44,14 +49,15 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($id)
     {
-        //
+        return view('edit_project',['project' => Project::find($id)]);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
+    /**ed resource.
      *
+     * Show the form for editing the specifi
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
@@ -67,10 +73,20 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
-    {
-        //
-    }
+ 
+        public function update($id, Request $request){
+            $this->validate($request, [
+                'title' => 'required|unique:projects,title|min:5|max:20',
+            ]);
+                    $project = Project::find($id);
+                    $project->title = $request['title'];
+                    
+                    return ($project->save() !== 1) ? 
+                        redirect('/projects')->with('status_success', 'Post updated!') : 
+                        redirect('/projects/'.$id)->with('status_error', 'Post was not updated!');
+                }
+            
+                
 
     /**
      * Remove the specified resource from storage.
@@ -78,8 +94,14 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        Project::destroy($id);
+        return redirect('/projects')->with('status_success', 'Project deleted!');
     }
+
+
+
+
+    
 }

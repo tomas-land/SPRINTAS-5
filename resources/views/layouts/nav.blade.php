@@ -18,14 +18,16 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        
+        <nav class="navbar navbar-expand-md  shadow-sm ">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" style="color:rgb(134, 10, 10);font-size: 22px;" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -34,18 +36,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse text-danger " id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto ">
 
                         <li class="nav-item ">
                             <a class="nav-link {{ Request::routeIs('projects') ? 'active' : '' }}"
-                                href="{{ route('projects') }}">Projects
+                                href="{{ route('projects.index') }}">Projects
                             </a>
                         </li>
 
                         <li class="nav-item {{ Request::routeIs('employees') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('employees') }}">Employees</a>
+                            <a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
                         </li>
 
 
@@ -89,11 +91,13 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
+</div>
+        <main class="">
+            <div class="container main">
             @yield('content')
+        </div>
         </main>
-    </div>
+    
 </body>
 
 </html>
