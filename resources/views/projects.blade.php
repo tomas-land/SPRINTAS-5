@@ -63,7 +63,7 @@
         <p style="color: red"><b>{{ session('status_error') }}</b></p>
     @endif
 
-  {{var_dump($project->employees)}}
+ 
 
 @endsection
 

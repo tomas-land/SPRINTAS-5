@@ -19,14 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/projects', function () {
-//     return view('projects');
-// })->name('projects');
-
-Route::get('/employees', function () {
-    return view('employees');
-})->name('employees');
-
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
